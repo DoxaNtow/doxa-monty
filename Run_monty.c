@@ -1,6 +1,7 @@
 #include "monty.h"
 #include <string.h>
-
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
 void free_tokens(void);

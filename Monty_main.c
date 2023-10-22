@@ -3,9 +3,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-
 char **op_toks = NULL;
-
 
 /**
  * main - the entry point for Monty Interp
@@ -17,15 +15,19 @@ char **op_toks = NULL;
  */
 int main(int argc, char **argv)
 {
-    FILE *script_fd = NULL;
-    int exit_code = EXIT_SUCCESS;
+    int exitcode = EXIT_SUCCESS;
+    FILE *scriptFd = NULL;
 
-    if (argc != 2)
+    if (argc < 2 || argc >2)
         return (usage_error());
-    script_fd = fopen(argv[1], "r");
-    if (script_fd == NULL)
+
+    scriptFd = fopen(argv[1], "r");
+
+    if (!scriptFd)
         return (f_open_error(argv[1]));
-    exit_code = run_monty(script_fd);
-    fclose(script_fd);
-    return (exit_code);
+
+    exitcode = exec_monty(scriptFd);
+
+    fclose(scriptFd);
+    return (exitcode);
 }

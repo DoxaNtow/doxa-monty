@@ -9,7 +9,7 @@ void free_tokens(void);
 unsigned int token_arr_len(void);
 int is_empty_line(char *line, char *delims);
 void (*get_op_func(char *opcode))(stack_t**, unsigned int);
-int run_monty(FILE *script_fd);
+int exec_monty(FILE *script_fd);
 */
 
 
@@ -121,12 +121,12 @@ void (*get_op_func(char *opcode))(stack_t**, unsigned int)
 
 
 /**
- * run_monty - Primary function to execute a Monty bytecodes script.
+ * exec_monty - Primary function to execute a Monty bytecodes script.
  * @script_fd: File descriptor for an open Monty bytecodes script.
  *
  * Return: EXIT_SUCCESS on success, respective error code on failure.
  */
-int run_monty(FILE *script_fd)
+int exec_monty(FILE *script_fd)
 {
     stack_t *stack = NULL;
     char *line = NULL;

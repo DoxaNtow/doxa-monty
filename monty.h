@@ -13,7 +13,7 @@
 
 
 /* GLOBAL OPCODE TOKENS */
-extern char **op_toks;
+extern char **op_tokns;
 
 
 /**

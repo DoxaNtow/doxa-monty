@@ -14,36 +14,36 @@ int exec_monty(FILE *script_fd);
 
 
 /**
- * free_tokens - Frees the global op_toks array of strings.
+ * free_tokens - Frees the global op_tokns array of strings.
  */
 void free_tokens(void)
 {
     size_t i = 0;
 
 
-    if (op_toks == NULL)
+    if (op_tokns == NULL)
         return;
 
 
-    for (i = 0; op_toks[i]; i++)
-        free(op_toks[i]);
+    for (i = 0; op_tokns[i]; i++)
+        free(op_tokns[i]);
 
 
-    free(op_toks);
+    free(op_tokns);
 }
 
 
 /**
- * token_arr_len - Gets the length of current op_toks.
+ * token_arr_len - Gets the length of current op_tokns.
  *
- * Return: Length of current op_toks (as int).
+ * Return: Length of current op_tokns (as int).
  */
 unsigned int token_arr_len(void)
 {
     unsigned int toks_len = 0;
 
 
-    while (op_toks[toks_len])
+    while (op_tokns[toks_len])
         toks_len++;
     return (toks_len);
 }
@@ -142,24 +142,24 @@ int exec_monty(FILE *script_fd)
     while (getline(&line, &len, script_fd) != -1)
     {
         line_number++;
-        op_toks = strtow(line, DELIMS);
-        if (op_toks == NULL)
+        op_tokns = strtow(line, DELIMS);
+        if (op_tokns == NULL)
         {
             if (is_empty_line(line, DELIMS))
                 continue;
             free_stack(&stack);
             return (malloc_error());
         }
-        else if (op_toks[0][0] == '#') /* comment line */
+        else if (op_tokns[0][0] == '#') /* comment line */
         {
             free_tokens();
             continue;
         }
-        op_func = get_op_func(op_toks[0]);
+        op_func = get_op_func(op_tokns[0]);
         if (op_func == NULL)
         {
             free_stack(&stack);
-            exit_status = unknown_op_error(op_toks[0], line_number);
+            exit_status = unknown_op_error(op_tokns[0], line_number);
             free_tokens();
             break;
         }
@@ -167,8 +167,8 @@ int exec_monty(FILE *script_fd)
         op_func(&stack, line_number);
         if (token_arr_len() != prev_tok_len)
         {
-            if (op_toks && op_toks[prev_tok_len])
-                exit_status = atoi(op_toks[prev_tok_len]);
+            if (op_tokns && op_tokns[prev_tok_len])
+                exit_status = atoi(op_tokns[prev_tok_len]);
             else
                 exit_status = EXIT_FAILURE;
             free_tokens();
